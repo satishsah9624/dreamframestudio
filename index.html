@@ -20,9 +20,6 @@
     <!-- Babel for JSX in browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <!-- Framer Motion CDN -->
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-    
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -91,7 +88,6 @@
 
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
-        const { motion, AnimatePresence } = window.Motion || window.framerMotion;
 
         // Utility function
         function cn(...classes) {
@@ -267,36 +263,29 @@
                     </nav>
 
                     {/* Mobile Menu */}
-                    <AnimatePresence>
-                        {isMenuOpen && (
-                            <motion.div 
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                className="fixed inset-0 z-40 bg-dark pt-24 px-6 md:hidden"
-                            >
-                                <div className="flex flex-col gap-6 text-center">
-                                    {navLinks.map((link) => (
-                                        <a 
-                                            key={link.name} 
-                                            href={link.href}
-                                            onClick={() => setIsMenuOpen(false)}
-                                            className="text-2xl font-serif hover:text-gold transition-colors"
-                                        >
-                                            {link.name}
-                                        </a>
-                                    ))}
+                    {isMenuOpen && (
+                        <div className="fixed inset-0 z-40 bg-dark pt-24 px-6 md:hidden">
+                            <div className="flex flex-col gap-6 text-center">
+                                {navLinks.map((link) => (
                                     <a 
-                                        href="#booking" 
+                                        key={link.name} 
+                                        href={link.href}
                                         onClick={() => setIsMenuOpen(false)}
-                                        className="mt-4 px-8 py-4 bg-gold text-dark font-bold rounded-full text-xl"
+                                        className="text-2xl font-serif hover:text-gold transition-colors"
                                     >
-                                        Book Your Date
+                                        {link.name}
                                     </a>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                                ))}
+                                <a 
+                                    href="#booking" 
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="mt-4 px-8 py-4 bg-gold text-dark font-bold rounded-full text-xl"
+                                >
+                                    Book Your Date
+                                </a>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Hero Section */}
                     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -310,11 +299,7 @@
                         </div>
 
                         <div className="relative z-10 text-center px-6 max-w-4xl">
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8 }}
-                            >
+                            <div>
                                 <span className="inline-block px-4 py-1 border border-gold text-gold text-xs tracking-[0.3em] uppercase mb-6 rounded-full">
                                     Professional Photography & Videography
                                 </span>
@@ -341,29 +326,20 @@
                                         View Portfolio
                                     </a>
                                 </div>
-                            </motion.div>
+                            </div>
                         </div>
 
                         {/* Scroll Indicator */}
-                        <motion.div 
-                            animate={{ y: [0, 10, 0] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
-                        >
+                        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce">
                             <span className="text-[10px] uppercase tracking-[0.2em]">Scroll</span>
                             <div className="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent"></div>
-                        </motion.div>
+                        </div>
                     </section>
 
                     {/* About Section */}
                     <section id="about" className="py-24 px-6 bg-dark-soft relative overflow-hidden">
                         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-                            <motion.div 
-                                initial={{ opacity: 0, x: -50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                className="relative"
-                            >
+                            <div className="relative">
                                 <div className="aspect-[4/5] rounded-2xl overflow-hidden border-2 border-gold/20">
                                     <img 
                                         src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=800" 
@@ -375,13 +351,9 @@
                                     <span className="text-4xl font-serif font-bold text-dark">10+</span>
                                     <span className="text-dark/80 text-sm font-bold uppercase tracking-tighter">Years of Experience</span>
                                 </div>
-                            </motion.div>
+                            </div>
 
-                            <motion.div 
-                                initial={{ opacity: 0, x: 50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                            >
+                            <div>
                                 <span className="text-gold font-bold tracking-widest uppercase text-sm">About DreamFrame</span>
                                 <h2 className="text-4xl md:text-5xl font-serif font-bold mt-4 mb-8">
                                     Where Every Frame <br /> Tells a <span className="italic text-gold">Story</span>
@@ -419,7 +391,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         </div>
                     </section>
 
@@ -433,12 +405,8 @@
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {SERVICES.map((service, index) => (
-                                    <motion.div 
+                                    <div 
                                         key={service.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: index * 0.1 }}
                                         className="group relative overflow-hidden rounded-2xl glass-card"
                                     >
                                         <div className="aspect-video overflow-hidden">
@@ -456,7 +424,7 @@
                                                 {service.description}
                                             </p>
                                         </div>
-                                    </motion.div>
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -489,34 +457,24 @@
                                 </div>
                             </div>
 
-                            <motion.div 
-                                layout
-                                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                            >
-                                <AnimatePresence mode="popLayout">
-                                    {filteredGallery.map((item) => (
-                                        <motion.div
-                                            key={item.id}
-                                            layout
-                                            initial={{ opacity: 0, scale: 0.9 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            exit={{ opacity: 0, scale: 0.9 }}
-                                            transition={{ duration: 0.4 }}
-                                            className="group relative aspect-square overflow-hidden rounded-2xl"
-                                        >
-                                            <img 
-                                                src={item.image} 
-                                                alt={item.title} 
-                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                                                <span className="text-gold text-xs font-bold uppercase tracking-widest mb-2">{item.category}</span>
-                                                <h4 className="text-2xl font-serif font-bold">{item.title}</h4>
-                                            </div>
-                                        </motion.div>
-                                    ))}
-                                </AnimatePresence>
-                            </motion.div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {filteredGallery.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className="group relative aspect-square overflow-hidden rounded-2xl"
+                                    >
+                                        <img 
+                                            src={item.image} 
+                                            alt={item.title} 
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                                            <span className="text-gold text-xs font-bold uppercase tracking-widest mb-2">{item.category}</span>
+                                            <h4 className="text-2xl font-serif font-bold">{item.title}</h4>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </section>
 
